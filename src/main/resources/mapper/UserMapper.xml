@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengh.db.mapper.UserMapper">
+
+    <insert id="save" parameterType="com.chengh.db.entity.User">
+        INSERT INTO t_user(name,phone,email,sex,password)
+        VALUES
+        (
+            #{name},#{phone},#{email},#{sex},#{password}
+        )
+    </insert>
+
+    <select id="getById" parameterType="long" resultType="com.chengh.db.entity.User">
+        select * from t_user where id = #{id}
+        <!--        in-->
+        <!--        <foreach collection="ids" item="id" separator="," open="(" close=")">-->
+        <!--            #{id}-->
+        <!--        </foreach>-->
+    </select>
+
+    <select id="getCreateDate" resultType="com.chengh.db.entity.crmchance">
+        select t1.mobile, t2.createDate
+        from crmcustomer t1 join crmchance t2 on t1.id = t2.crmCustomerId
+        where t1.mobile in
+        <foreach collection="mobiles" item="mobile" separator="," open="(" close=")">
+            #{mobile}
+        </foreach>
+    </select>
+
+</mapper>
